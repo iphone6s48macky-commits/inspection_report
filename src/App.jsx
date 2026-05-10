@@ -52,12 +52,12 @@ export default function InspectionApp() {
 
   useEffect(() => {
     if (step !== "preview") return;
-    const url = getReportUrl(buildPayload(true), true);
+    // 写真なしURL（LINEでリンクとして機能する長さに収める）
+    const url = getReportUrl(buildPayload(false), false);
     setReportUrl(url);
 
-    const qrUrl = getReportUrl(buildPayload(false), false);
     if (qrCanvasRef.current) {
-      QRCode.toCanvas(qrCanvasRef.current, qrUrl, {
+      QRCode.toCanvas(qrCanvasRef.current, url, {
         width: 200,
         margin: 2,
         color: { dark: "#f1f5f9", light: "#1e293b" },
@@ -392,7 +392,8 @@ export default function InspectionApp() {
 
             {/* 顧客用URL */}
             <div style={{ background: "#1e293b", borderRadius: 16, padding: 20, marginBottom: 16, border: "1px solid #334155" }}>
-              <div style={{ fontSize: 13, fontWeight: 700, color: "#93c5fd", marginBottom: 12 }}>📤 顧客用レポートURL（写真付き）</div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: "#93c5fd", marginBottom: 4 }}>📤 顧客用レポートURL</div>
+              <div style={{ fontSize: 11, color: "#475569", marginBottom: 12 }}>LINEで送れます。写真はデータが大きいためURLには含まれません。</div>
               <div style={{
                 background: "#0f172a", borderRadius: 8, padding: "10px 12px",
                 fontSize: 11, color: "#475569", wordBreak: "break-all",
@@ -415,8 +416,8 @@ export default function InspectionApp() {
 
             {/* QRコード */}
             <div style={{ background: "#1e293b", borderRadius: 16, padding: 20, marginBottom: 16, border: "1px solid #334155" }}>
-              <div style={{ fontSize: 13, fontWeight: 700, color: "#93c5fd", marginBottom: 4 }}>📱 QRコード（テキストのみ）</div>
-              <div style={{ fontSize: 11, color: "#475569", marginBottom: 12 }}>印刷して渡す場合はこちら。写真はLINEでURLを送ってください。</div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: "#93c5fd", marginBottom: 4 }}>📱 QRコード</div>
+              <div style={{ fontSize: 11, color: "#475569", marginBottom: 12 }}>印刷して渡す場合はこちら。</div>
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <canvas ref={qrCanvasRef} style={{ borderRadius: 8 }} />
               </div>
