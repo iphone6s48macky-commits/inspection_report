@@ -28,5 +28,5 @@ export function getReportUrl(data, includePhotos = true) {
   const payload = { ...data };
   if (!includePhotos) delete payload.photos;
   const base = `${window.location.origin}${import.meta.env.BASE_URL}report.html`;
-  return `${base}#data=${encodeReportData(payload)}`;
+  return `${base}?data=${encodeReportData(payload)}`;
 }

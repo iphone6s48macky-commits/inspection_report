@@ -16,9 +16,9 @@ export default function ReportViewer() {
 
   useEffect(() => {
     try {
-      const hash = window.location.hash;
-      if (!hash.startsWith("#data=")) { setError(true); return; }
-      const encoded = hash.slice(6);
+      const params = new URLSearchParams(window.location.search);
+      const encoded = params.get("data");
+      if (!encoded) { setError(true); return; }
       setData(decodeReportData(encoded));
     } catch {
       setError(true);
