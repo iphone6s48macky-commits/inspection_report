@@ -1,10 +1,14 @@
 export function encodeReportData(data) {
-  const json = JSON.stringify(data);
-  return btoa(encodeURIComponent(json));
+  const bytes = new TextEncoder().encode(JSON.stringify(data));
+  let binary = "";
+  bytes.forEach((b) => (binary += String.fromCharCode(b)));
+  return btoa(binary);
 }
 
 export function decodeReportData(str) {
-  return JSON.parse(decodeURIComponent(atob(str)));
+  const binary = atob(str);
+  const bytes = new Uint8Array([...binary].map((c) => c.charCodeAt(0)));
+  return JSON.parse(new TextDecoder().decode(bytes));
 }
 
 export function resizePhoto(file, maxWidth = 400, quality = 0.6) {
